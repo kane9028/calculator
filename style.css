@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel {
+  height: 450px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  gap: 10px;
+}
+
+.screen {
+  height: 50px;
+  width: 280px;
+  border: 1px solid black;
+}
+
+.clear,.delete {
+  width: 140px;
+  height: 70px;
+  font-size: 25px;
+}
+
+.numberOperator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.numberOperator button {
+  width: 68px;
+  height: 70px;
+  font-size: 35px;
+}
