@@ -11,6 +11,7 @@ const dot = document.querySelector('#dot');
 const equal = document.querySelector('#equal');
 const clear = document.querySelector('.clear');
 const deleteNum = document.querySelector('.delete');
+const screen = document.querySelector('.screen');
 
 number.forEach(element => {
   element.addEventListener('click', numTemporary);
@@ -24,15 +25,19 @@ clear.addEventListener('click', resetCalculator);
 deleteNum.addEventListener('click', deleteNumber);
 
 //store number temporary when user enters the desired number
-function numTemporary() {
-  
+function numTemporary(e) {
+  numForTemporary.push(e.target.textContent);
+  display(arrOfStrToNumber(numForTemporary));
+}
+
+function addDot(e) {
+  if(numForTemporary.indexOf('.') === -1) {
+    numForTemporary.push(e.target.textContent);
+    display(arrOfStrToNumber(numForTemporary));
+  }
 }
 
 function calculate() {
-  
-}
-
-function addDot() {
   
 }
 
@@ -48,3 +53,10 @@ function deleteNumber() {
   
 }
 
+function display(text) {
+  screen.textContent = text;
+}
+
+function arrOfStrToNumber(arr) {
+  return Number(arr.join(''));
+}
