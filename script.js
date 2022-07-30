@@ -4,6 +4,7 @@ const numForSum = [];
 const numForSubtract = [];
 const numForMultiply = [];
 const numForDivide = [];
+const resultArray = [];
 
 const number = document.querySelectorAll('.number');
 const operator = document.querySelectorAll('.operator');
@@ -20,7 +21,7 @@ operator.forEach(element => {
   element.addEventListener('click', calculate);
 });
 dot.addEventListener('click', addDot);
-equal.addEventListener('click', getResult);
+equal.addEventListener('click', calculate);
 clear.addEventListener('click', resetCalculator);
 deleteNum.addEventListener('click', deleteNumber);
 
@@ -53,15 +54,16 @@ function calculate(e) {
       let result = numForDivide[0] / arrOfStrToNumber(numForTemporary);
       numForDivide.splice(0);
       // If there is a number in sum or subtract memory array, And pressed operator is plus or subtract. Use previous result do sum or subtract; Empty arrays of memory; Store new result into relative memory array. Else, Store result into relative memory array.
-      if((e.target.id === 'subtraction' || e.target.id === 'plus') && numForSubtract.length !== 0) {
+      if((e.target.id !== 'multiplication' && e.target.id !== 'division') && numForSubtract.length !== 0) {
         moveNumToMemory(e, display(numForSubtract[0] - result));
         numForSubtract.splice(0);
-      } else if((e.target.id === 'subtraction' || e.target.id === 'plus') && numForSum.length !== 0) {
+      } else if((e.target.id !== 'multiplication' && e.target.id !== 'division') && numForSum.length !== 0) {
         moveNumToMemory(e, display(numForSum[0] + result));
         numForSum.splice(0);
       } else {
         moveNumToMemory(e, result);
-        if(!(e.target.id === 'division' || e.target.id === 'multiplication') && (numForSubtract.length !== 0 || numForSum.length !== 0)) display(result);
+        // DO NOT display result only when numForSunstract or numForSum is not empty AND pressed operator is multiply or divide
+        if(!((e.target.id === 'division' || e.target.id === 'multiplication') && (numForSubtract.length !== 0 || numForSum.length !== 0))) display(result);
       }
     } 
     // If there is a number in multiplication memory array. Calculate multiplication; Empty arrays of temp and memory.
@@ -69,15 +71,16 @@ function calculate(e) {
       let result = numForMultiply[0] * arrOfStrToNumber(numForTemporary);
       numForMultiply.splice(0);
       // If there is a number in sum or subtract memory array, And pressed operator is plus or subtract. Use previous result do sum or subtract; Empty arrays of memory; Store new result into relative memory array. Else, Store result into relative memory array.
-      if((e.target.id === 'subtraction' || e.target.id === 'plus') && numForSubtract.length !== 0) {
+      if((e.target.id !== 'multiplication' && e.target.id !== 'division') && numForSubtract.length !== 0) {
         moveNumToMemory(e, display(numForSubtract[0] - result));
         numForSubtract.splice(0);
-      } else if((e.target.id === 'subtraction' || e.target.id === 'plus') && numForSum.length !== 0) {
+      } else if((e.target.id !== 'multiplication' && e.target.id !== 'division') && numForSum.length !== 0) {
         moveNumToMemory(e, display(numForSum[0] + result));
         numForSum.splice(0);
       } else {
         moveNumToMemory(e, result);
-        if(!(e.target.id === 'division' || e.target.id === 'multiplication') && (numForSubtract[0] || numForSum[0])) display(result);
+        // DO NOT display result only when numForSunstract or numForSum is not empty AND pressed operator is multiply or divide
+        if(!((e.target.id === 'division' || e.target.id === 'multiplication') && (numForSubtract.length !== 0 || numForSum.length !== 0))) display(result);
       }
     } else if(numForSubtract.length !== 0) {
       let result = numForSubtract[0] - arrOfStrToNumber(numForTemporary);
@@ -103,6 +106,8 @@ function moveNumToMemory (e, num) {
       numForSubtract.push(num);
     } else if (e.target.id === 'plus') {
       numForSum.push(num);
+    } else if (e.target.id === 'equal') {
+      resultArray.push(num);
     } else {
       return;
     }
@@ -115,15 +120,13 @@ function moveNumToMemory (e, num) {
       numForSubtract.push(arrOfStrToNumber(numForTemporary));
     } else if (e.target.id === 'plus') {
       numForSum.push(arrOfStrToNumber(numForTemporary));
+    } else if (e.target.id === 'equal') {
+      resultArray.push(arrOfStrToNumber(numForTemporary));
     } else {
       return;
     }
   }
   numForTemporary.splice(0);
-}
-
-function getResult() {
-  
 }
 
 function resetCalculator() {
