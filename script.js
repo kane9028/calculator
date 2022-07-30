@@ -27,11 +27,13 @@ deleteNum.addEventListener('click', deleteNumber);
 
 //store number temporary when user enters the desired number
 function numTemporary(e) {
+  resultArray.splice(0);
   numForTemporary.push(e.target.textContent);
   display(numForTemporary.join(''));
 }
 
 function addDot(e) {
+  resultArray.splice(0);
   if(numForTemporary.indexOf('.') === -1) {
     numForTemporary.push(e.target.textContent);
     display(numForTemporary.join(''));
