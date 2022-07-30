@@ -39,8 +39,13 @@ function addDot(e) {
 }
 
 function calculate(e) {
+  //enable restarting a new calculation without clear previous result
+  if (resultArray.length !== 0) {
+    moveNumToMemory(e, resultArray[0]);
+    resultArray.splice(0);
+  }
   // If all memory arrays are empty. Move number from temp to relative memory array.
-  if(numForDivide.length === 0 && numForMultiply.length === 0 && numForSubtract.length === 0 && numForSum.length === 0) {
+  else if (numForDivide.length === 0 && numForMultiply.length === 0 && numForSubtract.length === 0 && numForSum.length === 0) {
     moveNumToMemory(e);
   } 
   // If operator is multiplication or division AND ONLY IF there is a number in sum or subtract memory array. Move number from temp to relative memory array.
@@ -99,28 +104,38 @@ function calculate(e) {
 function moveNumToMemory (e, num) {
   if(typeof num === 'number') {
     if(e.target.id === 'division') {
+      numForDivide.splice(0);
       numForDivide.push(num);
     } else if (e.target.id === 'multiplication') {
+      numForMultiply.splice(0);
       numForMultiply.push(num);
     } else if (e.target.id === 'subtraction') {
+      numForSubtract.splice(0);
       numForSubtract.push(num);
     } else if (e.target.id === 'plus') {
+      numForSum.splice(0);
       numForSum.push(num);
     } else if (e.target.id === 'equal') {
+      resultArray.splice(0);
       resultArray.push(num);
     } else {
       return;
     }
   } else {
     if(e.target.id === 'division') {
+      numForDivide.splice(0);
       numForDivide.push(arrOfStrToNumber(numForTemporary));
     } else if (e.target.id === 'multiplication') {
+      numForMultiply.splice(0);
       numForMultiply.push(arrOfStrToNumber(numForTemporary));
     } else if (e.target.id === 'subtraction') {
+      numForSubtract.splice(0);
       numForSubtract.push(arrOfStrToNumber(numForTemporary));
     } else if (e.target.id === 'plus') {
+      numForSum.splice(0);
       numForSum.push(arrOfStrToNumber(numForTemporary));
     } else if (e.target.id === 'equal') {
+      resultArray.splice(0);
       resultArray.push(arrOfStrToNumber(numForTemporary));
     } else {
       return;
