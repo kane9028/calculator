@@ -130,11 +130,20 @@ function moveNumToMemory (e, num) {
 }
 
 function resetCalculator() {
-  
+  numForTemporary.splice(0);
+  numForDivide.splice(0);
+  numForMultiply.splice(0);
+  numForSubtract.splice(0);
+  numForSum.splice(0);
+  resultArray.splice(0);
+  display('');
 }
 
 function deleteNumber() {
-  
+  if(numForTemporary.length !== 0) {
+    numForTemporary.pop();
+    display(numForTemporary.join(''));
+  }
 }
 
 function display(arg) {
