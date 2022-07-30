@@ -41,13 +41,9 @@ function addDot(e) {
 }
 
 function calculate(e) {
-  //enable restarting a new calculation without clear previous result
-  if (resultArray.length !== 0) {
-    moveNumToMemory(e, resultArray[0]);
-    resultArray.splice(0);
-  }
+  switchOperator();
   // If all memory arrays are empty. Move number from temp to relative memory array.
-  else if (numForDivide.length === 0 && numForMultiply.length === 0 && numForSubtract.length === 0 && numForSum.length === 0) {
+  if (numForDivide.length === 0 && numForMultiply.length === 0 && numForSubtract.length === 0 && numForSum.length === 0) {
     moveNumToMemory(e);
   } 
   // If operator is multiplication or division AND ONLY IF there is a number in sum or subtract memory array. Move number from temp to relative memory array.
@@ -146,6 +142,28 @@ function moveNumToMemory (e, num) {
   numForTemporary.splice(0);
 }
 
+//allow user to change operator in the process of calculation
+function switchOperator() {
+  if (numForTemporary.length === 0) {
+    if (numForDivide.length !== 0) {
+      numForTemporary.push(numForDivide[0]);
+      numForDivide.splice(0);
+    } else if (numForMultiply.length !==0) {
+      numForTemporary.push(numForMultiply[0]);
+      numForMultiply.splice(0);
+    } else if (numForSubtract.length !==0) {
+      numForTemporary.push(numForSubtract[0]);
+      numForSubtract.splice(0);
+    } else if (numForSum.length !== 0) {
+      numForTemporary.push(numForSum[0]);
+      numForSum.splice(0);
+    } else if (resultArray.length !==0) {
+      numForTemporary.push(resultArray[0]);
+      resultArray.splice(0);
+    }
+  }
+}
+
 function resetCalculator() {
   numForTemporary.splice(0);
   numForDivide.splice(0);
@@ -168,6 +186,6 @@ function display(arg) {
   return arg;
 }
 
-function arrOfStrToNumber(arr) {
-  return Number(arr.join(''));
+function arrOfStrToNumber(arg) {
+  return typeof arg[0] === 'number' ? arg[0] : Number(arg.join(''));
 }
