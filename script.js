@@ -54,6 +54,10 @@ function calculate(e) {
   else {
     // If there is a number in division memory array. Calculate division; Empty arrays of temp and memory.
     if(numForDivide.length !== 0) {
+      if (arrOfStrToNumber(numForTemporary) === 0){
+        resetCalculator();
+        return display('Error!');
+      } 
       let result = numForDivide[0] / arrOfStrToNumber(numForTemporary);
       numForDivide.splice(0);
       // If there is a number in sum or subtract memory array, And pressed operator is plus or subtract. Use previous result do sum or subtract; Empty arrays of memory; Store new result into relative memory array. Else, Store result into relative memory array.
